@@ -69,8 +69,7 @@ open class ActionCableClient {
     open var onChannelReceive: ((Channel, Any?, Swift.Error?) -> Void)?
     
     //MARK: Properties
-    open var isConnected : Bool { return socket.isConnected }
-    open var url: Foundation.URL { return socket.currentURL }
+    open var url: Foundation.URL { return socket.request.url! }
     
     open var headers : [String: String]? {
         get { return socket.request.allHTTPHeaderFields }
@@ -92,7 +91,7 @@ open class ActionCableClient {
     ///  ```
     public required init(url: URL) {
         /// Setup Initialize Socket
-        socket = WebSocket(url: url)
+        socket = WebSocket.init(request: .init(url: url))
         setupWebSocket()
     }
     
@@ -132,7 +131,7 @@ open class ActionCableClient {
     /// Disconnect from the server.
     open func disconnect() {
         manualDisconnectFlag = true
-        socket.disconnect(forceTimeout: 0)
+        socket.disconnect()
     }
     
     internal func reconnect() {
@@ -177,7 +176,8 @@ open class ActionCableClient {
         }
       
         // Let's check if we are connected.
-        guard isConnected else { throw TransmitError.notConnected }
+        // FIXME: Connect check?
+        // guard isConnected else { throw TransmitError.notConnected }
       
         socket.write(string: JSONString) {
           //FINISHED!
@@ -319,11 +319,26 @@ extension ActionCableClient {
 extension ActionCableClient {
     
     fileprivate func setupWebSocket() {
-        self.socket.onConnect    = { [weak self] in self!.didConnect() }
-        self.socket.onDisconnect = { [weak self] (error: Swift.Error?) in self!.didDisconnect(error) }
-        self.socket.onText       = { [weak self] (text: String) in self!.onText(text) }
-        self.socket.onData       = { [weak self] (data: Data) in self!.onData(data) }
-        self.socket.onPong       = { [weak self] (data: Data?) in self!.didPong() }
+        self.socket.onEvent = { [weak self] event in
+            switch event {
+            case .connected:
+                self?.didConnect()
+            case .disconnected:
+                self?.disconnect()
+            case .text(let text):
+                self?.onText(text)
+            case .binary(let data):
+                self?.onData(data)
+            case .pong:
+                self?.didPong()
+            default: break
+            }
+        }
+//        self.socket.onConnect    = { [weak self] in self!.didConnect() }
+//        self.socket.onDisconnect = { [weak self] (error: Swift.Error?) in self!.didDisconnect(error) }
+//        self.socket.onText       = { [weak self] (text: String) in self!.onText(text) }
+//        self.socket.onData       = { [weak self] (data: Data) in self!.onData(data) }
+//        self.socket.onPong       = { [weak self] (data: Data?) in self!.didPong() }
     }
     
     fileprivate func didConnect() {
@@ -487,13 +502,13 @@ extension ActionCableClient {
 
 extension ActionCableClient : CustomDebugStringConvertible {
     public var debugDescription : String {
-            return "ActionCableClient(url: \"\(socket.currentURL)\" connected: \(socket.isConnected) id: \(Unmanaged.passUnretained(self).toOpaque()))"
+        return "ActionCableClient(url: \"\(socket.request.url)\" id: \(Unmanaged.passUnretained(self).toOpaque()))"
     }
 }
 
 extension ActionCableClient : CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
-        return socket.currentURL
+        return socket.request.url
     }
 }
 
