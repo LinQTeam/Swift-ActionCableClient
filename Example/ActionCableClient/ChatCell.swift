@@ -34,8 +34,8 @@ class ChatCell: UITableViewCell {
             self.textView.sizeToFit()
         }
     }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         textView.frame = CGRect.zero
         textView.lineBreakMode = NSLineBreakMode.byWordWrapping
