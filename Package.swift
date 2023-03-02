@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Swift-ActionCableClient",
+    name: "ActionCableClient",
     products: [
         .library(
             name: "Swift-ActionCableClient",
@@ -19,7 +19,6 @@ let package = Package(
         .target(
             name: "Swift-ActionCableClient",
             dependencies: ["Starscream", "Nimble", "Quick"],
-            path: "Source/Classes",
-            sources: ["ActionCableClient.swift"]),
+            path: "Source/Classes/**/*"),
     ]
 )
