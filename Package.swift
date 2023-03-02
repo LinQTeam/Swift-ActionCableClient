@@ -11,14 +11,12 @@ let package = Package(
             targets: ["ActionCableClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.1.1"),
-        .package(url: "https://github.com/Quick/Nimble.git", from: "11.2.1"),
-        .package(url: "https://github.com/Quick/Quick.git", from: "6.1.0")
+        .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.4")
     ],
     targets: [
         .target(
             name: "ActionCableClient",
-            dependencies: ["Starscream", "Nimble", "Quick"],
+            dependencies: ["Starscream"],
             path: "Source/Classes/",
             sources: ["ActionCableClient.swift"]),
     ]
