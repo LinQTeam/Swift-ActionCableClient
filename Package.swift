@@ -4,11 +4,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "Swift-ActionCableClient",
+    name: "ActionCableClient",
     products: [
         .library(
-            name: "Swift-ActionCableClient",
-            targets: ["Swift-ActionCableClient"]),
+            name: "ActionCableClient",
+            targets: ["ActionCableClient"]),
     ],
     dependencies: [
         .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.1.1"),
@@ -17,9 +17,9 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Swift-ActionCableClient",
+            name: "ActionCableClient",
             dependencies: ["Starscream", "Nimble", "Quick"],
-            path: "Source/Classes/**/*",
+            path: "Source/Classes/",
             sources: ["ActionCableClient.swift"]),
     ]
 )
