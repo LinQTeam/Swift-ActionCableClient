@@ -18,7 +18,6 @@ let package = Package(
     targets: [
         .target(
             name: "Swift-ActionCableClient",
-            dependencies: ["Swift-ActionCableClient"],
-            path: "Source"),
+            path: "Source/Classes"),
     ]
 )
