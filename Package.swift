@@ -4,20 +4,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "ActionCableClient",
+    name: "SwiftActionCableClient",
     products: [
         .library(
-            name: "ActionCableClient",
-            targets: ["ActionCableClient"]),
+            name: "SwiftActionCableClient",
+            targets: ["SwiftActionCableClient"]),
     ],
     dependencies: [
         .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.4")
     ],
     targets: [
         .target(
-            name: "ActionCableClient",
+            name: "SwiftActionCableClient",
             dependencies: ["Starscream"],
-            path: "Source/Classes/",
+            path: "Source/Classes",
             sources: ["ActionCableClient.swift", "Channel.swift", 
             "Constants.swift", "Error.swift", 
             "JSONSerializer.swift", "RetryHandler.swift"]),
