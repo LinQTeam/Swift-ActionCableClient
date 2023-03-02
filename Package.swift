@@ -18,6 +18,8 @@ let package = Package(
             name: "ActionCableClient",
             dependencies: ["Starscream"],
             path: "Source/Classes/",
-            sources: ["ActionCableClient.swift"]),
+            sources: ["ActionCableClient.swift", "Channel.swift", 
+            "Constants.swift", "Error.swift", 
+            "JSONSerializer.swift", "RetryHandler.swift"]),
     ]
 )
