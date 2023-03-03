@@ -24,7 +24,7 @@ import Foundation
 
 internal class JSONSerializer {
 
-    static let nonStandardMessageTypes: [MessageType] = [.ping, .welcome]
+    static let nonStandardMessageTypes: [SwiftMessageType] = [.ping, .welcome]
   
     static func serialize(_ channel : Channel, command: Command, data: ActionPayload?) throws -> String {
         
@@ -52,7 +52,7 @@ internal class JSONSerializer {
         }
     }
     
-    static func deserialize(_ string: String) throws -> Message {
+    static func deserialize(_ string: String) throws -> SwiftMessage {
       
         do {
             guard let JSONData = string.data(using: String.Encoding.utf8) else { throw SerializationError.json }
@@ -60,9 +60,9 @@ internal class JSONSerializer {
             guard let JSONObj = try JSONSerialization.jsonObject(with: JSONData, options: .allowFragments) as? Dictionary<String, AnyObject>
               else { throw SerializationError.json }
             
-            var messageType: MessageType = .unrecognized
+            var messageType: SwiftMessageType = .unrecognized
             if let typeObj = JSONObj["type"], let typeString = typeObj as? String {
-              messageType = MessageType(string: typeString)
+              messageType = SwiftMessageType(string: typeString)
             }
 
             let channelIdentifier: String? = JSONObj["identifier"] as? String
@@ -73,7 +73,7 @@ internal class JSONSerializer {
                 guard let _ = channelIdentifier
                   else { throw SerializationError.protocolViolation }
                 
-                return Message(channelIdentifier: channelIdentifier,
+                return SwiftMessage(channelIdentifier: channelIdentifier,
                                actionName:  nil,
                                messageType: messageType,
                                data: nil,
@@ -81,7 +81,7 @@ internal class JSONSerializer {
               
             // Welcome/Ping messages
             case .welcome, .ping:
-                return Message(channelIdentifier: nil,
+                return SwiftMessage(channelIdentifier: nil,
                                actionName: nil,
                                messageType: messageType,
                                data: nil,
@@ -109,9 +109,9 @@ internal class JSONSerializer {
                   messageError = error
                 }
                 
-                return Message(channelIdentifier: channelIdentifier!,
+                return SwiftMessage(channelIdentifier: channelIdentifier!,
                                actionName: messageActionName,
-                               messageType: MessageType.message,
+                               messageType: SwiftMessageType.message,
                                data: messageValue,
                                error: messageError)
             

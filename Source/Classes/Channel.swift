@@ -159,7 +159,7 @@ open class Channel: Hashable, Equatable {
         } catch TransmitError.notSubscribed where self.shouldBufferActions {
             
             ActionCableSerialQueue.async(execute: {
-                self.actionBuffer.append(Action(name: name, params: params))
+                self.actionBuffer.append(SwiftAction(name: name, params: params))
             })
             
             return TransmitError.notSubscribed
@@ -194,7 +194,7 @@ open class Channel: Hashable, Equatable {
     
     internal var onReceiveActionHooks: Dictionary<String, OnReceiveClosure> = Dictionary()
     internal unowned var client: ActionCableClient
-    internal var actionBuffer: Array<Action> = Array()
+    internal var actionBuffer: Array<SwiftAction> = Array()
     public var hashValue: Int {
         get {
             return Int(arc4random_uniform(UInt32(Int32.max)))
@@ -211,7 +211,7 @@ public func ==(lhs: Channel, rhs: Channel) -> Bool {
 }
 
 extension Channel {
-    internal func onMessage(_ message: Message) {
+    internal func onMessage(_ message: SwiftMessage) {
         switch message.messageType {
             case .message:
                 if let callback = self.onReceive {

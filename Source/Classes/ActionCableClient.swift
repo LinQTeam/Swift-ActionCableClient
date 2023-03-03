@@ -285,9 +285,9 @@ extension ActionCableClient {
         do {
           try self.transmit(on: channel, as: Command.unsubscribe)
             
-            let message = Message(channelIdentifier: channel.identifier,
+            let message = SwiftMessage(channelIdentifier: channel.identifier,
                                    actionName: nil,
-                                  messageType: MessageType.cancelSubscription,
+                                  messageType: SwiftMessageType.cancelSubscription,
                                          data: nil,
                                         error: nil)
             
@@ -364,9 +364,9 @@ extension ActionCableClient {
         
         let channels = self.channels
         for (_, channel) in channels {
-            let message = Message(channelIdentifier: channel.identifier,
+            let message = SwiftMessage(channelIdentifier: channel.identifier,
                                   actionName: nil,
-                                  messageType: MessageType.hibernateSubscription,
+                                  messageType: SwiftMessageType.hibernateSubscription,
                                   data: nil,
                                   error: nil)
             onMessage(message)
@@ -433,7 +433,7 @@ extension ActionCableClient {
         })
     }
     
-    fileprivate func onMessage(_ message: Message) {
+    fileprivate func onMessage(_ message: SwiftMessage) {
             switch(message.messageType) {
             case .unrecognized:
                 break

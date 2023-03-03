@@ -39,7 +39,7 @@ internal enum Command {
     }
 }
 
-internal enum MessageType {
+internal enum SwiftMessageType {
     case confirmSubscription
     case rejectSubscription
     case cancelSubscription
@@ -64,33 +64,33 @@ internal enum MessageType {
     
     init(string: String) {
         switch(string) {
-            case MessageType.welcome.string:
-                self = MessageType.welcome
-            case MessageType.ping.string:
-                self = MessageType.ping
-            case MessageType.confirmSubscription.string:
-                self = MessageType.confirmSubscription
-            case MessageType.rejectSubscription.string:
-                self = MessageType.rejectSubscription
-            case MessageType.cancelSubscription.string:
-                self = MessageType.cancelSubscription
-            case MessageType.hibernateSubscription.string:
-                self = MessageType.hibernateSubscription
+            case SwiftMessageType.welcome.string:
+                self = SwiftMessageType.welcome
+            case SwiftMessageType.ping.string:
+                self = SwiftMessageType.ping
+            case SwiftMessageType.confirmSubscription.string:
+                self = SwiftMessageType.confirmSubscription
+            case SwiftMessageType.rejectSubscription.string:
+                self = SwiftMessageType.rejectSubscription
+            case SwiftMessageType.cancelSubscription.string:
+                self = SwiftMessageType.cancelSubscription
+            case SwiftMessageType.hibernateSubscription.string:
+                self = SwiftMessageType.hibernateSubscription
             default:
-                self = MessageType.unrecognized
+                self = SwiftMessageType.unrecognized
         }
     }
 }
 
-internal struct Message {
+internal struct SwiftMessage {
     var channelIdentifier : String?
     var actionName : String?
-    var messageType : MessageType
+    var messageType : SwiftMessageType
     var data : Any?
     var error: Swift.Error?
   
-    static func simple(_ channel: Channel, messageType: MessageType) -> Message {
-        return Message(channelIdentifier: channel.identifier,
+    static func simple(_ channel: Channel, messageType: SwiftMessageType) -> SwiftMessage {
+        return SwiftMessage(channelIdentifier: channel.identifier,
                         actionName: nil,
                        messageType: messageType,
                               data: nil,
@@ -98,7 +98,7 @@ internal struct Message {
     }
 }
 
-internal struct Action {
+internal struct SwiftAction {
     var name : String
     var params: Dictionary<String, Any>?
 }
