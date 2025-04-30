@@ -85,7 +85,7 @@ open class Channel: Hashable, Equatable {
     open var onRejected: (() -> Void)?
 
 
-    internal init(name: String, parameters: ChannelParameters?, client: ActionCableClient, autoSubscribe: Bool=true, shouldBufferActions: Bool=true) {
+    public init(name: String, parameters: ChannelParameters?, client: ActionCableClient, autoSubscribe: Bool=true, shouldBufferActions: Bool=true) {
         self.name = name
         self.parameters = parameters
         self.identifier = Channel.identifierFor(name: name, parameters: parameters)
