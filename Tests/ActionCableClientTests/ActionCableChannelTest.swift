@@ -20,12 +20,12 @@
 //  USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import Quick
+import Nimble
+import SwiftActionCableClient
 
-struct TestConfiguration {
-    static var EchoChannel = "EchoChannel"
-    static var EchoChannelAction = "echo"
-    static var RejectChannel = "RejectChannel"
-    static var GoodURL: URL = URL(string:"ws://actioncable-echo.herokuapp.com/cable")!
-    static var BadURL: URL = URL(string: "ws://blhasf/cable")!
+class ActionCableChannelTest : QuickSpec {
+    override class func spec() {
+    }
 }
+

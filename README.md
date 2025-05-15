@@ -11,19 +11,10 @@
 
 To install, simply:
 
-#### Cocoapods
+#### Swift Package Manager
 
-Add the following line to your `Podfile` and run `pod install`
-
-```ruby
-pod "ActionCableClient"
 ```
-
-#### Carthage
-
-Add the following to your `Cartfile` and run `carthage update` as normal.
-```ruby
-github "danielrhodes/Swift-ActionCableClient"
+https://github.com/LinQTeam/Swift-ActionCableClient.git
 ```
 
 
@@ -136,6 +127,7 @@ For more documentation, see the [wiki](https://github.com/danielrhodes/Swift-Act
 ## Author
 
 Daniel Rhodes, rhodes.daniel@gmail.com
+@kazumalab from LinQ Team
 
 ## License
 
