@@ -11,9 +11,7 @@ let package = Package(
             targets: ["SwiftActionCableClient"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.4"),
-        .package(url: "https://github.com/Quick/Nimble", from: "13.7.1"),
-        .package(url: "https://github.com/Quick/Quick", from: "7.6.2")
+        .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.4")
     ],
     targets: [
         .target(
@@ -34,9 +32,7 @@ let package = Package(
         .testTarget(
             name: "ActionCableClientTests",
             dependencies: [
-                "SwiftActionCableClient",
-                "Nimble",
-                "Quick"
+                "SwiftActionCableClient"
             ]
         ),
     ]
