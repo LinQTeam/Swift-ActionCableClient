@@ -20,12 +20,9 @@
 //  USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Quick
-import Nimble
 import SwiftActionCableClient
+import XCTest
 
-class ActionCableChannelTest : QuickSpec {
-    override class func spec() {
-    }
+class ActionCableChannelTest : XCTestCase {
 }
 
