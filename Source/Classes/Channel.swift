@@ -46,7 +46,7 @@ open class Channel: Hashable, Equatable {
     
     /// Subscribed
     open var isSubscribed : Bool {
-        return client.subscribed(identifier: identifier)
+        return client?.subscribed(identifier: identifier) ?? false
     }
     
     /// A block called when a message has been received on this channel.
@@ -152,6 +152,7 @@ open class Channel: Hashable, Equatable {
     ///             message.
     @discardableResult
     open func action(_ name: String, with params: [String: Any]? = nil) -> Swift.Error? {
+        guard let client = client else { return TransmitError.notConnected }
         do {
           try (client.action(name, on: self, with: params))
         // Consume the error and return false if the error is a not subscribed
@@ -178,7 +179,7 @@ open class Channel: Hashable, Equatable {
     /// channel.subscribe()
     /// ```
     open func subscribe() {
-        client.subscribe(self)
+        client?.subscribe(self)
     }
     
     /// Unsubscribe from the channel on the server.
@@ -189,11 +190,11 @@ open class Channel: Hashable, Equatable {
     /// channel.unsubscribe()
     /// ```
     open func unsubscribe() {
-        client.unsubscribe(self)
+        client?.unsubscribe(self)
     }
     
     internal var onReceiveActionHooks: Dictionary<String, OnReceiveClosure> = Dictionary()
-    internal unowned var client: ActionCableClient
+    internal weak var client: ActionCableClient?
     internal var actionBuffer: Array<SwiftAction> = Array()
     public var hashValue: Int {
         get {
@@ -265,7 +266,7 @@ extension Channel {
 
 extension Channel: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "ActionCable.Channel<\(hashValue)>(name: \"\(self.name)\" subscribed: \(self.isSubscribed))"
+        return "ActionCable.Channel<\(hashValue)>(name: \"\(self.name)\" subscribed: \(self.isSubscribed) client: \(client == nil ? "nil" : "active"))"
     }
 }
 
